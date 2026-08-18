@@ -9,7 +9,10 @@
 <body>
 <nav class="navbar">
   <div class="navbar-inner">
-    <a class="navbar-brand" href="index.html">GitHub Support</a>
+    <a class="navbar-brand" href="index.html">
+      <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M11.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm-2.25.75a2.25 2.25 0 1 1 3 2.122v2.256a2.251 2.251 0 1 1-1.5 0V6.622A2.25 2.25 0 0 1 9.5 3.25ZM4.25 12a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm-2.25.75a2.25 2.25 0 1 1 3 2.122V4.372a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-1.5 2.122v3.253a2.25 2.25 0 0 1-3 2.125Z"/></svg>
+      GitHub Support
+    </a>
     <div class="navbar-links">
       <a href="index.html">Home</a>
       <a href="git-basics.html" class="active">Git Basics</a>
@@ -52,6 +55,46 @@ git config --global init.defaultBranch main</code></pre>
     </tbody>
   </table>
   <p>This is why you <code>add</code> before you <code>commit</code>: staging lets you commit only <em>part</em> of what you changed, deliberately.</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 620 150" role="img" aria-labelledby="areas-title">
+      <title id="areas-title">Edit a file, stage it, commit it, then push to the remote</title>
+      <g font-family="-apple-system,sans-serif">
+        <rect x="10" y="45" width="130" height="60" rx="8" fill="var(--bg)" stroke="var(--border)"/>
+        <text x="75" y="70" text-anchor="middle" fill="var(--text)" font-weight="700" font-size="12.5">Working</text>
+        <text x="75" y="86" text-anchor="middle" fill="var(--text)" font-weight="700" font-size="12.5">Directory</text>
+
+        <rect x="245" y="45" width="130" height="60" rx="8" fill="var(--bg)" stroke="var(--border)"/>
+        <text x="310" y="70" text-anchor="middle" fill="var(--text)" font-weight="700" font-size="12.5">Staging</text>
+        <text x="310" y="86" text-anchor="middle" fill="var(--text)" font-weight="700" font-size="12.5">Area</text>
+
+        <rect x="480" y="45" width="130" height="60" rx="8" fill="var(--accent-bg)" stroke="var(--accent)"/>
+        <text x="545" y="70" text-anchor="middle" fill="var(--accent)" font-weight="700" font-size="12.5">Repository</text>
+        <text x="545" y="86" text-anchor="middle" fill="var(--accent)" font-size="11">(.git history)</text>
+
+        <g stroke="var(--text-muted)" stroke-width="1.5" fill="none" marker-end="url(#arrow2)">
+          <line x1="140" y1="75" x2="242" y2="75"/>
+          <line x1="375" y1="75" x2="477" y2="75"/>
+        </g>
+        <text x="191" y="30" text-anchor="middle" fill="var(--text)" font-family="ui-monospace,monospace" font-size="12">git add</text>
+        <text x="426" y="30" text-anchor="middle" fill="var(--text)" font-family="ui-monospace,monospace" font-size="12">git commit</text>
+
+        <g stroke="var(--text-muted)" stroke-width="1.5" fill="none" marker-end="url(#arrow2rev)">
+          <line x1="242" y1="105" x2="140" y2="105"/>
+        </g>
+        <text x="191" y="128" text-anchor="middle" fill="var(--text-muted)" font-family="ui-monospace,monospace" font-size="11">git restore</text>
+      </g>
+      <defs>
+        <marker id="arrow2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="var(--text-muted)"/>
+        </marker>
+        <marker id="arrow2rev" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="var(--text-muted)"/>
+        </marker>
+      </defs>
+    </svg>
+    <p class="diagram-caption">A change moves right as you <code>add</code> and <code>commit</code> it — and you can send it back left with <code>restore</code> before it's committed.</p>
+  </div>
 
   <h2 id="starting">Starting a repository</h2>
   <p>Two ways to get a project under git:</p>

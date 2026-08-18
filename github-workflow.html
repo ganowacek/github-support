@@ -9,7 +9,10 @@
 <body>
 <nav class="navbar">
   <div class="navbar-inner">
-    <a class="navbar-brand" href="index.html">GitHub Support</a>
+    <a class="navbar-brand" href="index.html">
+      <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M11.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm-2.25.75a2.25 2.25 0 1 1 3 2.122v2.256a2.251 2.251 0 1 1-1.5 0V6.622A2.25 2.25 0 0 1 9.5 3.25ZM4.25 12a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm-2.25.75a2.25 2.25 0 1 1 3 2.122V4.372a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-1.5 2.122v3.253a2.25 2.25 0 0 1-3 2.125Z"/></svg>
+      GitHub Support
+    </a>
     <div class="navbar-links">
       <a href="index.html">Home</a>
       <a href="git-basics.html">Git Basics</a>
@@ -22,6 +25,51 @@
 <main>
   <h1>GitHub Workflow</h1>
   <p class="subtitle">Git tracks history; GitHub adds collaboration on top — forks, pull requests, reviews, issues, and automation. This page covers how those pieces fit together.</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 700 190" role="img" aria-labelledby="pipeline-title">
+      <title id="pipeline-title">Fork or clone, branch, commit, push, open a pull request, get reviewed, then merge</title>
+      <g font-family="-apple-system,sans-serif" font-size="11.5" font-weight="700">
+        <rect x="0" y="20" width="150" height="50" rx="8" fill="var(--bg)" stroke="var(--border)"/>
+        <text x="75" y="49" text-anchor="middle" fill="var(--text)">Fork / Clone</text>
+
+        <rect x="185" y="20" width="150" height="50" rx="8" fill="var(--bg)" stroke="var(--border)"/>
+        <text x="260" y="49" text-anchor="middle" fill="var(--text)">Branch + Commit</text>
+
+        <rect x="370" y="20" width="150" height="50" rx="8" fill="var(--bg)" stroke="var(--border)"/>
+        <text x="445" y="49" text-anchor="middle" fill="var(--text)">Push</text>
+
+        <rect x="555" y="20" width="145" height="50" rx="8" fill="var(--accent-bg)" stroke="var(--accent)"/>
+        <text x="627" y="49" text-anchor="middle" fill="var(--accent)">Open Pull Request</text>
+      </g>
+
+      <g stroke="var(--text-muted)" stroke-width="1.5" fill="none" marker-end="url(#pipearrow)">
+        <line x1="150" y1="45" x2="182" y2="45"/>
+        <line x1="335" y1="45" x2="367" y2="45"/>
+        <line x1="520" y1="45" x2="552" y2="45"/>
+        <path d="M627,70 C627,110 480,110 480,140" marker-end="url(#pipearrow)"/>
+      </g>
+
+      <g font-family="-apple-system,sans-serif" font-size="11.5" font-weight="700">
+        <rect x="335" y="140" width="145" height="50" rx="8" fill="var(--bg)" stroke="var(--border)"/>
+        <text x="407" y="169" text-anchor="middle" fill="var(--text)">Code Review</text>
+
+        <rect x="150" y="140" width="150" height="50" rx="8" fill="var(--tip-bg)" stroke="var(--tip-border)"/>
+        <text x="225" y="169" text-anchor="middle" fill="var(--text)">Merge ✓</text>
+      </g>
+      <g stroke="var(--text-muted)" stroke-width="1.5" fill="none" marker-end="url(#pipearrow)">
+        <line x1="332" y1="165" x2="303" y2="165"/>
+      </g>
+      <path d="M407,140 C407,110 300,90 260,73" stroke="var(--text-muted)" stroke-width="1.5" fill="none" stroke-dasharray="3,3" marker-end="url(#pipearrowmuted)"/>
+      <text x="330" y="105" fill="var(--text-muted)" font-family="-apple-system,sans-serif" font-size="10">requests changes</text>
+
+      <defs>
+        <marker id="pipearrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--text-muted)"/></marker>
+        <marker id="pipearrowmuted" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--text-muted)"/></marker>
+      </defs>
+    </svg>
+    <p class="diagram-caption">If a reviewer requests changes, you push more commits to the same branch and the loop continues — no need to open a new PR.</p>
+  </div>
 
   <h2 id="fork-vs-clone">Forking vs. cloning</h2>
   <table>

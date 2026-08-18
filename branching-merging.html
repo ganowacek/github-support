@@ -9,7 +9,10 @@
 <body>
 <nav class="navbar">
   <div class="navbar-inner">
-    <a class="navbar-brand" href="index.html">GitHub Support</a>
+    <a class="navbar-brand" href="index.html">
+      <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M11.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm-2.25.75a2.25 2.25 0 1 1 3 2.122v2.256a2.251 2.251 0 1 1-1.5 0V6.622A2.25 2.25 0 0 1 9.5 3.25ZM4.25 12a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm-2.25.75a2.25 2.25 0 1 1 3 2.122V4.372a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-1.5 2.122v3.253a2.25 2.25 0 0 1-3 2.125Z"/></svg>
+      GitHub Support
+    </a>
     <div class="navbar-links">
       <a href="index.html">Home</a>
       <a href="git-basics.html">Git Basics</a>
@@ -46,6 +49,35 @@ git branch -d feature/login-form</code></pre>
     <p>You may see <code>git checkout -b &lt;name&gt;</code> in older tutorials — that's the predecessor to <code>git switch -c</code>. They do the same thing; <code>switch</code> is just less overloaded and harder to use by mistake.</p>
   </div>
 
+  <div class="diagram">
+    <svg viewBox="0 0 480 160" role="img" aria-labelledby="branch-title">
+      <title id="branch-title">A feature branch splits off main at a shared commit and gains its own commits</title>
+      <g stroke-width="2.5" fill="none">
+        <line x1="30" y1="100" x2="430" y2="100" stroke="var(--branch-main)"/>
+        <path d="M150,100 C190,100 190,45 230,45 L 340,45" stroke="var(--branch-feature)"/>
+      </g>
+      <g font-family="ui-monospace,monospace" font-size="11">
+        <circle cx="30" cy="100" r="9" fill="var(--commit-fill)" stroke="var(--branch-main)" stroke-width="2.5"/>
+        <circle cx="150" cy="100" r="9" fill="var(--commit-fill)" stroke="var(--branch-main)" stroke-width="2.5"/>
+        <circle cx="290" cy="100" r="9" fill="var(--commit-fill)" stroke="var(--branch-main)" stroke-width="2.5"/>
+        <circle cx="410" cy="100" r="9" fill="var(--commit-fill)" stroke="var(--branch-main)" stroke-width="2.5"/>
+        <circle cx="260" cy="45" r="9" fill="var(--commit-fill)" stroke="var(--branch-feature)" stroke-width="2.5"/>
+        <circle cx="340" cy="45" r="9" fill="var(--commit-fill)" stroke="var(--branch-feature)" stroke-width="2.5"/>
+      </g>
+      <g font-family="-apple-system,sans-serif" font-size="11" fill="var(--text-muted)" text-anchor="middle">
+        <text x="30" y="122">A</text>
+        <text x="150" y="122">B</text>
+        <text x="290" y="122">E</text>
+        <text x="410" y="122">F</text>
+        <text x="260" y="30">C</text>
+        <text x="340" y="30">D</text>
+      </g>
+      <text x="435" y="104" fill="var(--branch-main)" font-family="ui-monospace,monospace" font-size="12" font-weight="700">main</text>
+      <text x="340" y="18" text-anchor="end" fill="var(--branch-feature)" font-family="ui-monospace,monospace" font-size="12" font-weight="700">feature/login-form</text>
+    </svg>
+    <p class="diagram-caption">The feature branch shares history up to commit B, then goes its own way — while main keeps moving independently.</p>
+  </div>
+
   <h2 id="merging">Merging</h2>
   <p>To bring a branch's changes into your current branch:</p>
   <pre><code>git switch main
@@ -55,6 +87,46 @@ git merge feature/login-form</code></pre>
     <li><strong>Fast-forward:</strong> if <code>main</code> hasn't moved since you branched off it, git just slides the pointer forward. No new commit, no conflict possible.</li>
     <li><strong>Three-way merge:</strong> if both branches have new commits, git combines them and creates a new "merge commit" with two parents. This is where conflicts can happen.</li>
   </ul>
+
+  <div class="diagram-row">
+    <div class="diagram">
+      <svg viewBox="0 0 260 140" role="img" aria-labelledby="ff-title">
+        <title id="ff-title">Fast-forward merge just moves the main pointer forward, no new commit</title>
+        <line x1="25" y1="80" x2="235" y2="80" stroke="var(--branch-feature)" stroke-width="2.5"/>
+        <g font-family="ui-monospace,monospace">
+          <circle cx="25" cy="80" r="8" fill="var(--commit-fill)" stroke="var(--branch-main)" stroke-width="2.5"/>
+          <circle cx="100" cy="80" r="8" fill="var(--commit-fill)" stroke="var(--branch-main)" stroke-width="2.5"/>
+          <circle cx="170" cy="80" r="8" fill="var(--commit-fill)" stroke="var(--branch-feature)" stroke-width="2.5"/>
+          <circle cx="235" cy="80" r="8" fill="var(--commit-fill)" stroke="var(--branch-feature)" stroke-width="2.5"/>
+        </g>
+        <text x="100" y="60" text-anchor="middle" fill="var(--text-muted)" font-size="10.5">main (before)</text>
+        <text x="255" y="60" text-anchor="end" fill="var(--branch-feature)" font-size="9.5" font-weight="700">main+feature (after)</text>
+        <path d="M100,95 C100,112 235,112 235,97" stroke="var(--text-muted)" stroke-width="1.3" fill="none" stroke-dasharray="3,3" marker-end="url(#ffarrow)"/>
+        <defs><marker id="ffarrow" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="var(--text-muted)"/></marker></defs>
+      </svg>
+      <p class="diagram-caption"><strong>Fast-forward:</strong> main hadn't moved, so its pointer just slides up to the branch tip.</p>
+    </div>
+    <div class="diagram">
+      <svg viewBox="0 0 260 140" role="img" aria-labelledby="threeway-title">
+        <title id="threeway-title">Three-way merge creates a new merge commit with two parents</title>
+        <g stroke-width="2.5" fill="none">
+          <line x1="20" y1="95" x2="235" y2="95" stroke="var(--branch-main)"/>
+          <path d="M80,95 C110,95 110,45 140,45 L190,45" stroke="var(--branch-feature)"/>
+          <path d="M190,45 C215,45 215,75 235,95" stroke="var(--branch-feature)"/>
+        </g>
+        <g>
+          <circle cx="20" cy="95" r="8" fill="var(--commit-fill)" stroke="var(--branch-main)" stroke-width="2.5"/>
+          <circle cx="80" cy="95" r="8" fill="var(--commit-fill)" stroke="var(--branch-main)" stroke-width="2.5"/>
+          <circle cx="160" cy="95" r="8" fill="var(--commit-fill)" stroke="var(--branch-main)" stroke-width="2.5"/>
+          <circle cx="140" cy="45" r="8" fill="var(--commit-fill)" stroke="var(--branch-feature)" stroke-width="2.5"/>
+          <circle cx="190" cy="45" r="8" fill="var(--commit-fill)" stroke="var(--branch-feature)" stroke-width="2.5"/>
+          <circle cx="235" cy="95" r="9" fill="var(--accent)" stroke="var(--accent)" stroke-width="2.5"/>
+        </g>
+        <text x="255" y="118" text-anchor="end" fill="var(--accent)" font-size="10.5" font-weight="700">merge commit</text>
+      </svg>
+      <p class="diagram-caption"><strong>Three-way:</strong> both sides moved, so git creates a new commit joining them.</p>
+    </div>
+  </div>
 
   <h2 id="conflicts">Resolving merge conflicts</h2>
   <p>A conflict happens when the same lines were changed differently on both branches, and git can't guess which version you want. When it happens, git pauses the merge and marks the file:</p>
@@ -88,6 +160,48 @@ git rebase main</code></pre>
       <tr><td>Safe on shared/public branches</td><td>Safe only on branches nobody else is using</td></tr>
     </tbody>
   </table>
+  <div class="diagram">
+    <svg viewBox="0 0 460 220" role="img" aria-labelledby="rebase-title">
+      <title id="rebase-title">Rebasing replays feature branch commits on top of the current tip of main, rewriting their hashes</title>
+      <text x="10" y="20" fill="var(--text-muted)" font-family="-apple-system,sans-serif" font-size="11" font-weight="700">BEFORE</text>
+      <g stroke-width="2.5" fill="none">
+        <line x1="30" y1="55" x2="200" y2="55" stroke="var(--branch-main)"/>
+        <path d="M110,55 C140,55 140,20 170,20 L 260,20" stroke="var(--branch-feature)"/>
+      </g>
+      <g>
+        <circle cx="30" cy="55" r="8" fill="var(--commit-fill)" stroke="var(--branch-main)" stroke-width="2.5"/>
+        <circle cx="110" cy="55" r="8" fill="var(--commit-fill)" stroke="var(--branch-main)" stroke-width="2.5"/>
+        <circle cx="200" cy="55" r="8" fill="var(--commit-fill)" stroke="var(--branch-main)" stroke-width="2.5"/>
+        <circle cx="190" cy="20" r="8" fill="var(--commit-fill)" stroke="var(--branch-feature)" stroke-width="2.5"/>
+        <circle cx="260" cy="20" r="8" fill="var(--commit-fill)" stroke="var(--branch-feature)" stroke-width="2.5"/>
+      </g>
+      <g font-family="ui-monospace,monospace" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">
+        <text x="200" y="75">main</text>
+        <text x="190" y="10">X</text>
+        <text x="260" y="10">Y</text>
+      </g>
+
+      <line x1="20" y1="110" x2="440" y2="110" stroke="var(--border)"/>
+
+      <text x="10" y="145" fill="var(--text-muted)" font-family="-apple-system,sans-serif" font-size="11" font-weight="700">AFTER git rebase main</text>
+      <g stroke-width="2.5" fill="none">
+        <line x1="30" y1="180" x2="410" y2="180" stroke="var(--branch-feature)"/>
+      </g>
+      <g>
+        <circle cx="30" cy="180" r="8" fill="var(--commit-fill)" stroke="var(--branch-main)" stroke-width="2.5"/>
+        <circle cx="110" cy="180" r="8" fill="var(--commit-fill)" stroke="var(--branch-main)" stroke-width="2.5"/>
+        <circle cx="200" cy="180" r="8" fill="var(--commit-fill)" stroke="var(--branch-main)" stroke-width="2.5"/>
+        <circle cx="300" cy="180" r="8" fill="var(--commit-fill)" stroke="var(--branch-feature)" stroke-width="2.5"/>
+        <circle cx="390" cy="180" r="8" fill="var(--commit-fill)" stroke="var(--branch-feature)" stroke-width="2.5"/>
+      </g>
+      <g font-family="ui-monospace,monospace" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">
+        <text x="300" y="200">X'</text>
+        <text x="390" y="200">Y'</text>
+      </g>
+    </svg>
+    <p class="diagram-caption">X and Y get new hashes (X′, Y′) as if they were written after main's latest commit — that's a rewrite of feature's history.</p>
+  </div>
+
   <div class="callout warn">
     <span class="callout-label">Warning — the golden rule of rebasing</span>
     <p>Never rebase a branch that other people have already pulled or branched from. Rewriting shared history means everyone else's copy diverges from yours, and untangling it is far more painful than the merge commit you were trying to avoid.</p>

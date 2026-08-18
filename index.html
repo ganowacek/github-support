@@ -9,7 +9,10 @@
 <body>
 <nav class="navbar">
   <div class="navbar-inner">
-    <a class="navbar-brand" href="index.html">GitHub Support</a>
+    <a class="navbar-brand" href="index.html">
+      <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M11.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm-2.25.75a2.25 2.25 0 1 1 3 2.122v2.256a2.251 2.251 0 1 1-1.5 0V6.622A2.25 2.25 0 0 1 9.5 3.25ZM4.25 12a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm-2.25.75a2.25 2.25 0 1 1 3 2.122V4.372a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-1.5 2.122v3.253a2.25 2.25 0 0 1-3 2.125Z"/></svg>
+      GitHub Support
+    </a>
     <div class="navbar-links">
       <a href="index.html" class="active">Home</a>
       <a href="git-basics.html">Git Basics</a>
@@ -19,10 +22,59 @@
   </div>
 </nav>
 
-<main>
-  <h1>Git &amp; GitHub, from zero to submitting your work</h1>
-  <p class="subtitle">A quick-reference guide put together for office hours and TA support. Read it top to bottom if you're new, or jump straight to the section you're stuck on.</p>
+<div class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">TA office hours guide</span>
+    <h1>Git &amp; GitHub, from zero to submitting your work</h1>
+    <p class="subtitle">A quick-reference guide for this course. Read it top to bottom if you're new, or jump straight to the section you're stuck on.</p>
 
+    <div class="diagram">
+      <svg viewBox="0 0 720 130" role="img" aria-labelledby="lifecycle-title">
+        <title id="lifecycle-title">Your files move from working directory to staging to your local repository to GitHub</title>
+        <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12">
+          <!-- boxes -->
+          <g>
+            <rect x="10" y="35" width="150" height="56" rx="8" fill="var(--bg)" stroke="var(--border)"/>
+            <text x="85" y="58" text-anchor="middle" fill="var(--text)" font-weight="700" font-family="-apple-system,sans-serif" font-size="13">Working Directory</text>
+            <text x="85" y="76" text-anchor="middle" fill="var(--text-muted)" font-family="-apple-system,sans-serif" font-size="11">files you edit</text>
+          </g>
+          <g>
+            <rect x="195" y="35" width="150" height="56" rx="8" fill="var(--bg)" stroke="var(--border)"/>
+            <text x="270" y="58" text-anchor="middle" fill="var(--text)" font-weight="700" font-family="-apple-system,sans-serif" font-size="13">Staging Area</text>
+            <text x="270" y="76" text-anchor="middle" fill="var(--text-muted)" font-family="-apple-system,sans-serif" font-size="11">marked for commit</text>
+          </g>
+          <g>
+            <rect x="380" y="35" width="150" height="56" rx="8" fill="var(--bg)" stroke="var(--border)"/>
+            <text x="455" y="58" text-anchor="middle" fill="var(--text)" font-weight="700" font-family="-apple-system,sans-serif" font-size="13">Local Repository</text>
+            <text x="455" y="76" text-anchor="middle" fill="var(--text-muted)" font-family="-apple-system,sans-serif" font-size="11">committed history</text>
+          </g>
+          <g>
+            <rect x="565" y="35" width="150" height="56" rx="8" fill="var(--accent-bg)" stroke="var(--accent)"/>
+            <text x="640" y="58" text-anchor="middle" fill="var(--accent)" font-weight="700" font-family="-apple-system,sans-serif" font-size="13">GitHub</text>
+            <text x="640" y="76" text-anchor="middle" fill="var(--accent)" font-family="-apple-system,sans-serif" font-size="11">remote copy</text>
+          </g>
+          <!-- arrows -->
+          <g stroke="var(--text-muted)" stroke-width="1.5" fill="none" marker-end="url(#arrow)">
+            <line x1="160" y1="63" x2="192" y2="63"/>
+            <line x1="345" y1="63" x2="377" y2="63"/>
+            <line x1="530" y1="63" x2="562" y2="63"/>
+          </g>
+          <text x="176" y="20" text-anchor="middle" fill="var(--text)" font-size="11">git add</text>
+          <text x="361" y="20" text-anchor="middle" fill="var(--text)" font-size="11">git commit</text>
+          <text x="546" y="20" text-anchor="middle" fill="var(--text)" font-size="11">git push</text>
+        </g>
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="var(--text-muted)"/>
+          </marker>
+        </defs>
+      </svg>
+      <p class="diagram-caption">The path your code takes from your editor to GitHub — covered in full on the <a href="git-basics.html">Git Basics</a> page.</p>
+    </div>
+  </div>
+</div>
+
+<main>
   <div class="callout tip">
     <span class="callout-label">Before you ask a TA</span>
     <p>Most git problems fall into a handful of categories: merge conflicts, detached HEAD, accidentally committing to the wrong branch, or a rejected push. Check the <a href="github-workflow.html#troubleshooting">Troubleshooting</a> section first — you might fix it yourself in under a minute.</p>
@@ -31,15 +83,15 @@
   <h2>Guide sections</h2>
   <div class="card-grid">
     <a class="card" href="git-basics.html">
-      <h3>1. Git Basics</h3>
+      <h3><span class="step-badge">1</span> Git Basics</h3>
       <p>Install &amp; configure git, understand the three areas, and learn the core commands: init, clone, add, commit, status, log, diff, and .gitignore.</p>
     </a>
     <a class="card" href="branching-merging.html">
-      <h3>2. Branching &amp; Merging</h3>
+      <h3><span class="step-badge">2</span> Branching &amp; Merging</h3>
       <p>Create and switch branches, merge changes, resolve conflicts, and understand when (and when not) to rebase.</p>
     </a>
     <a class="card" href="github-workflow.html">
-      <h3>3. GitHub Workflow</h3>
+      <h3><span class="step-badge">3</span> GitHub Workflow</h3>
       <p>Forking vs. cloning, pull requests, code review, issues, a light intro to GitHub Actions, and a troubleshooting cheat sheet.</p>
     </a>
   </div>
