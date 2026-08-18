@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Support — Git &amp; GitHub Guide</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="navbar-brand" href="index.html">GitHub Support</a>
+    <div class="navbar-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="git-basics.html">Git Basics</a>
+      <a href="branching-merging.html">Branching &amp; Merging</a>
+      <a href="github-workflow.html">GitHub Workflow</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <h1>Git &amp; GitHub, from zero to submitting your work</h1>
+  <p class="subtitle">A quick-reference guide put together for office hours and TA support. Read it top to bottom if you're new, or jump straight to the section you're stuck on.</p>
+
+  <div class="callout tip">
+    <span class="callout-label">Before you ask a TA</span>
+    <p>Most git problems fall into a handful of categories: merge conflicts, detached HEAD, accidentally committing to the wrong branch, or a rejected push. Check the <a href="github-workflow.html#troubleshooting">Troubleshooting</a> section first — you might fix it yourself in under a minute.</p>
+  </div>
+
+  <h2>Guide sections</h2>
+  <div class="card-grid">
+    <a class="card" href="git-basics.html">
+      <h3>1. Git Basics</h3>
+      <p>Install &amp; configure git, understand the three areas, and learn the core commands: init, clone, add, commit, status, log, diff, and .gitignore.</p>
+    </a>
+    <a class="card" href="branching-merging.html">
+      <h3>2. Branching &amp; Merging</h3>
+      <p>Create and switch branches, merge changes, resolve conflicts, and understand when (and when not) to rebase.</p>
+    </a>
+    <a class="card" href="github-workflow.html">
+      <h3>3. GitHub Workflow</h3>
+      <p>Forking vs. cloning, pull requests, code review, issues, a light intro to GitHub Actions, and a troubleshooting cheat sheet.</p>
+    </a>
+  </div>
+
+  <h2>Quick command reference</h2>
+  <table>
+    <thead>
+      <tr><th>Command</th><th>What it does</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>git status</code></td><td>Show what's changed and what's staged</td></tr>
+      <tr><td><code>git add &lt;file&gt;</code></td><td>Stage a file for the next commit</td></tr>
+      <tr><td><code>git commit -m "message"</code></td><td>Save staged changes as a new commit</td></tr>
+      <tr><td><code>git log --oneline</code></td><td>Show commit history, one line per commit</td></tr>
+      <tr><td><code>git diff</code></td><td>Show unstaged changes line by line</td></tr>
+      <tr><td><code>git branch</code></td><td>List branches</td></tr>
+      <tr><td><code>git switch -c &lt;name&gt;</code></td><td>Create and switch to a new branch</td></tr>
+      <tr><td><code>git merge &lt;branch&gt;</code></td><td>Merge another branch into your current one</td></tr>
+      <tr><td><code>git pull</code></td><td>Fetch and merge changes from the remote</td></tr>
+      <tr><td><code>git push</code></td><td>Upload your commits to the remote</td></tr>
+      <tr><td><code>git clone &lt;url&gt;</code></td><td>Copy a remote repository to your machine</td></tr>
+      <tr><td><code>git restore &lt;file&gt;</code></td><td>Discard unstaged changes to a file</td></tr>
+    </tbody>
+  </table>
+  <p>See the <a href="git-basics.html">Git Basics</a> page for the full explanation of each of these.</p>
+</main>
+
+<footer>
+  GitHub Support &middot; a guide maintained for course office hours &middot; <a href="https://github.com/ganowacek/github-support">source on GitHub</a>
+</footer>
+</body>
+</html>

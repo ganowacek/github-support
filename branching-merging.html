@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Branching &amp; Merging — GitHub Support</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="navbar-brand" href="index.html">GitHub Support</a>
+    <div class="navbar-links">
+      <a href="index.html">Home</a>
+      <a href="git-basics.html">Git Basics</a>
+      <a href="branching-merging.html" class="active">Branching &amp; Merging</a>
+      <a href="github-workflow.html">GitHub Workflow</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <h1>Branching &amp; Merging</h1>
+  <p class="subtitle">A branch is just a movable pointer to a commit. Branching lets you work on something — a feature, a fix, an experiment — without touching the code everyone else is relying on.</p>
+
+  <h2 id="why-branch">Why branch</h2>
+  <p>Without branches, every commit lands on the same line of history, so half-finished work is visible (and risky) for everyone. With branches, you isolate your changes until they're ready, then bring them back together with a <strong>merge</strong>.</p>
+
+  <h2 id="creating">Creating &amp; switching branches</h2>
+  <pre><code># List branches (current one is marked with *)
+git branch
+
+# Create a new branch
+git branch feature/login-form
+
+# Switch to it
+git switch feature/login-form
+
+# Create and switch in one step
+git switch -c feature/login-form
+
+# Delete a branch you're done with (once merged)
+git branch -d feature/login-form</code></pre>
+  <div class="callout tip">
+    <span class="callout-label">Tip</span>
+    <p>You may see <code>git checkout -b &lt;name&gt;</code> in older tutorials — that's the predecessor to <code>git switch -c</code>. They do the same thing; <code>switch</code> is just less overloaded and harder to use by mistake.</p>
+  </div>
+
+  <h2 id="merging">Merging</h2>
+  <p>To bring a branch's changes into your current branch:</p>
+  <pre><code>git switch main
+git merge feature/login-form</code></pre>
+  <p>Git resolves this one of two ways:</p>
+  <ul>
+    <li><strong>Fast-forward:</strong> if <code>main</code> hasn't moved since you branched off it, git just slides the pointer forward. No new commit, no conflict possible.</li>
+    <li><strong>Three-way merge:</strong> if both branches have new commits, git combines them and creates a new "merge commit" with two parents. This is where conflicts can happen.</li>
+  </ul>
+
+  <h2 id="conflicts">Resolving merge conflicts</h2>
+  <p>A conflict happens when the same lines were changed differently on both branches, and git can't guess which version you want. When it happens, git pauses the merge and marks the file:</p>
+  <pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+your version of the code
+=======
+their version of the code
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/login-form</code></pre>
+  <p>To resolve it:</p>
+  <ol>
+    <li>Open the file and decide what the final code should look like — keep one side, the other, or a combination.</li>
+    <li>Delete the <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> marker lines entirely.</li>
+    <li>Stage the resolved file: <code>git add &lt;file&gt;</code></li>
+    <li>Finish the merge: <code>git commit</code> (git pre-fills a merge commit message for you).</li>
+  </ol>
+  <div class="callout tip">
+    <span class="callout-label">Tip</span>
+    <p>Run <code>git status</code> at any point during a conflict — it lists exactly which files still need resolving. If it all goes wrong, <code>git merge --abort</code> backs out and returns you to how things were before you ran <code>merge</code>.</p>
+  </div>
+
+  <h2 id="rebase">Rebasing</h2>
+  <p>Rebasing rewrites your branch so it looks like you started from the <em>current</em> tip of another branch, instead of where you actually branched off:</p>
+  <pre><code>git switch feature/login-form
+git rebase main</code></pre>
+  <p>This replays your commits one by one on top of <code>main</code>, which gives a cleaner, linear history than a merge commit would. But it <strong>rewrites commit history</strong> — the commits get new hashes.</p>
+  <table>
+    <thead><tr><th>Merge</th><th>Rebase</th></tr></thead>
+    <tbody>
+      <tr><td>Preserves history exactly as it happened</td><td>Rewrites history into a straight line</td></tr>
+      <tr><td>Adds an extra merge commit</td><td>No merge commit, cleaner log</td></tr>
+      <tr><td>Safe on shared/public branches</td><td>Safe only on branches nobody else is using</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn">
+    <span class="callout-label">Warning — the golden rule of rebasing</span>
+    <p>Never rebase a branch that other people have already pulled or branched from. Rewriting shared history means everyone else's copy diverges from yours, and untangling it is far more painful than the merge commit you were trying to avoid.</p>
+  </div>
+
+  <h2 id="best-practices">Best practices</h2>
+  <ul>
+    <li>Keep branches small and focused on one thing — easier to review, easier to merge, easier to abandon if it doesn't work out.</li>
+    <li>Name branches descriptively: <code>fix/null-pointer-in-parser</code>, not <code>george-branch-2</code>.</li>
+    <li>Pull the latest <code>main</code> before you start a new branch, so you're not conflicting with changes you didn't know about.</li>
+    <li>Commit often within a branch — small commits are easier to review and easier to revert individually if one turns out to be wrong.</li>
+  </ul>
+
+  <div class="page-nav">
+    <a href="git-basics.html">← Back: Git Basics</a>
+    <a href="github-workflow.html">Next: GitHub Workflow →</a>
+  </div>
+</main>
+
+<footer>
+  GitHub Support &middot; a guide maintained for course office hours &middot; <a href="https://github.com/ganowacek/github-support">source on GitHub</a>
+</footer>
+</body>
+</html>

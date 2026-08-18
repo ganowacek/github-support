@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Workflow — GitHub Support</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="navbar-brand" href="index.html">GitHub Support</a>
+    <div class="navbar-links">
+      <a href="index.html">Home</a>
+      <a href="git-basics.html">Git Basics</a>
+      <a href="branching-merging.html">Branching &amp; Merging</a>
+      <a href="github-workflow.html" class="active">GitHub Workflow</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <h1>GitHub Workflow</h1>
+  <p class="subtitle">Git tracks history; GitHub adds collaboration on top — forks, pull requests, reviews, issues, and automation. This page covers how those pieces fit together.</p>
+
+  <h2 id="fork-vs-clone">Forking vs. cloning</h2>
+  <table>
+    <thead><tr><th></th><th>Clone</th><th>Fork</th></tr></thead>
+    <tbody>
+      <tr><td>What it does</td><td>Copies a repo to your local machine</td><td>Copies a repo to <em>your own GitHub account</em></td></tr>
+      <tr><td>When you'd use it</td><td>You already have push access (e.g. a team repo, a GitHub Classroom repo)</td><td>You don't have push access to the original (e.g. contributing to someone else's open-source project)</td></tr>
+      <tr><td>Typical next step</td><td>Branch, commit, push directly</td><td>Branch, commit, push to <em>your fork</em>, then open a pull request back to the original</td></tr>
+    </tbody>
+  </table>
+  <p>For most course assignments you'll clone a repo you already have access to. Forking matters more once you're contributing to a shared or external project.</p>
+
+  <h2 id="pull-requests">Pull requests</h2>
+  <p>A pull request (PR) proposes merging one branch into another and gives everyone a place to discuss and review the change before it lands.</p>
+  <ol>
+    <li>Push your branch: <code>git push origin feature/login-form</code></li>
+    <li>On GitHub, open <strong>Pull requests → New pull request</strong>, choose your branch, and describe what changed and why.</li>
+    <li>Reviewers leave comments, request changes, or approve.</li>
+    <li>Push more commits to the same branch to address feedback — they show up in the same PR automatically.</li>
+    <li>Once approved, merge the PR (usually via the "Squash and merge" or "Merge" button on GitHub).</li>
+  </ol>
+  <div class="callout tip">
+    <span class="callout-label">Tip</span>
+    <p>Write PR descriptions for a reader who has zero context: what does this change, why was it needed, and how did you test it? "Fixed bug" tells a reviewer nothing.</p>
+  </div>
+
+  <h2 id="code-review">Code review etiquette</h2>
+  <ul>
+    <li><strong>As an author:</strong> keep PRs small and focused — a 30-line PR gets a careful review, a 900-line PR gets a rubber stamp. Respond to every comment, even if it's just "done" or "good point, didn't change this — here's why."</li>
+    <li><strong>As a reviewer:</strong> comment on the code, not the person ("this loop re-fetches on every iteration" vs. "you did this wrong"). Distinguish blocking issues from nitpicks — say so explicitly if a comment is optional.</li>
+    <li>It's fine to approve with minor suggested changes rather than blocking a PR on style preferences.</li>
+  </ul>
+
+  <h2 id="issues">Issues</h2>
+  <p>Issues track bugs, tasks, and discussion separate from any specific branch. A good issue includes: what's wrong or wanted, steps to reproduce (for bugs), and what you expected instead.</p>
+  <p>Link a PR to an issue so it closes automatically on merge by including a keyword in the PR description:</p>
+  <pre><code>Fixes #42
+Closes #17</code></pre>
+
+  <h2 id="actions">GitHub Actions (a quick intro)</h2>
+  <p>Actions run automated workflows — most commonly, running your test suite on every push or PR so problems are caught before merging. A minimal example, saved as <code>.github/workflows/tests.yml</code>:</p>
+  <pre><code>name: Run tests
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - run: pytest</code></pre>
+  <p>If your course uses autograding via GitHub Classroom, this is the same mechanism under the hood — your PR or push triggers a workflow that runs your tests and reports pass/fail.</p>
+
+  <h2 id="troubleshooting">Troubleshooting cheat sheet</h2>
+  <table>
+    <thead><tr><th>Symptom</th><th>Likely cause &amp; fix</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><code>Updates were rejected because the remote contains work that you do not have locally</code></td>
+        <td>Someone pushed since you last pulled. Run <code>git pull</code> (resolve conflicts if prompted), then push again.</td>
+      </tr>
+      <tr>
+        <td><code>Permission denied (publickey)</code> or a 403 on push</td>
+        <td>Your credentials aren't set up. Check you're using HTTPS with a token, or that your SSH key is added to your GitHub account under Settings → SSH keys.</td>
+      </tr>
+      <tr>
+        <td><code>You are in 'detached HEAD' state</code></td>
+        <td>You checked out a commit or tag directly instead of a branch. If you want to keep any new work: <code>git switch -c new-branch-name</code> before doing anything else.</td>
+      </tr>
+      <tr>
+        <td>Committed straight to <code>main</code> by accident</td>
+        <td>Move the commit to a new branch without touching <code>main</code>: <code>git branch feature-name</code>, then <code>git reset --hard origin/main</code> on <code>main</code>, then <code>git switch feature-name</code>.</td>
+      </tr>
+      <tr>
+        <td>Merge conflict markers showing up in a file</td>
+        <td>See <a href="branching-merging.html#conflicts">Resolving merge conflicts</a>.</td>
+      </tr>
+      <tr>
+        <td>Accidentally committed a large or sensitive file</td>
+        <td>If it hasn't been pushed yet: <code>git reset --soft HEAD~1</code>, remove the file, recommit. If it has been pushed, stop and ask a TA — rewriting pushed history needs care.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="page-nav">
+    <a href="branching-merging.html">← Back: Branching &amp; Merging</a>
+    <a href="index.html">Home →</a>
+  </div>
+</main>
+
+<footer>
+  GitHub Support &middot; a guide maintained for course office hours &middot; <a href="https://github.com/ganowacek/github-support">source on GitHub</a>
+</footer>
+</body>
+</html>

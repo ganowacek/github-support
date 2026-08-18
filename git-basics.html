@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git Basics — GitHub Support</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="navbar-brand" href="index.html">GitHub Support</a>
+    <div class="navbar-links">
+      <a href="index.html">Home</a>
+      <a href="git-basics.html" class="active">Git Basics</a>
+      <a href="branching-merging.html">Branching &amp; Merging</a>
+      <a href="github-workflow.html">GitHub Workflow</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <h1>Git Basics</h1>
+  <p class="subtitle">Git is a <em>version control system</em>: it tracks changes to files over time so you can review history, undo mistakes, and collaborate without overwriting each other's work. GitHub is a website that <em>hosts</em> git repositories — git is the tool, GitHub is one place to store and share what it tracks.</p>
+
+  <h2 id="install">Installing &amp; configuring git</h2>
+  <p>Check whether git is already installed:</p>
+  <pre><code>git --version</code></pre>
+  <p>If it's missing:</p>
+  <ul>
+    <li><strong>macOS:</strong> <code>xcode-select --install</code>, or <code>brew install git</code> if you use Homebrew.</li>
+    <li><strong>Windows:</strong> install <a href="https://git-scm.com/download/win">Git for Windows</a>, which also gives you Git Bash.</li>
+    <li><strong>Linux:</strong> <code>sudo apt install git</code> (Debian/Ubuntu) or your distro's package manager.</li>
+  </ul>
+  <p>Then tell git who you are — this name and email get attached to every commit you make:</p>
+  <pre><code>git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+git config --global init.defaultBranch main</code></pre>
+  <div class="callout tip">
+    <span class="callout-label">Tip</span>
+    <p>Use the <strong>same email</strong> you use for your GitHub account, or GitHub won't link your commits to your profile.</p>
+  </div>
+
+  <h2 id="three-areas">The three areas</h2>
+  <p>Every git repository has three places a change can live:</p>
+  <table>
+    <thead><tr><th>Area</th><th>What it is</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Working directory</strong></td><td>The actual files on disk that you edit.</td></tr>
+      <tr><td><strong>Staging area (index)</strong></td><td>A holding area for changes you've marked to go into the next commit, via <code>git add</code>.</td></tr>
+      <tr><td><strong>Repository (.git history)</strong></td><td>Permanent snapshots created by <code>git commit</code>.</td></tr>
+    </tbody>
+  </table>
+  <p>This is why you <code>add</code> before you <code>commit</code>: staging lets you commit only <em>part</em> of what you changed, deliberately.</p>
+
+  <h2 id="starting">Starting a repository</h2>
+  <p>Two ways to get a project under git:</p>
+  <pre><code># Start tracking a new/existing folder
+git init
+
+# Copy down an existing repository (e.g. from GitHub Classroom)
+git clone https://github.com/org/repo.git</code></pre>
+  <p><code>clone</code> is by far the more common one in this course — you'll almost always be cloning a repo your instructor or GitHub Classroom already created.</p>
+
+  <h2 id="core-commands">Core commands</h2>
+  <pre><code># See what's changed since your last commit
+git status
+
+# Stage a specific file, or everything
+git add path/to/file.py
+git add .
+
+# Commit staged changes with a message
+git commit -m "Add binary search implementation"
+
+# See history
+git log
+git log --oneline
+
+# See exactly what changed, line by line
+git diff            # unstaged changes
+git diff --staged   # staged changes</code></pre>
+  <div class="callout tip">
+    <span class="callout-label">Tip</span>
+    <p>Write commit messages in the imperative mood — "Add feature", not "Added feature" or "Adds feature". Keep the first line under ~50 characters and describe <em>why</em>, not just <em>what</em>, if it's not obvious.</p>
+  </div>
+
+  <h2 id="gitignore">.gitignore</h2>
+  <p>Some files shouldn't be tracked: build artifacts, virtual environments, editor settings, compiled binaries. List patterns for them in a <code>.gitignore</code> file at the root of your repo:</p>
+  <pre><code># .gitignore
+__pycache__/
+*.pyc
+node_modules/
+.DS_Store
+.env
+venv/</code></pre>
+  <div class="callout warn">
+    <span class="callout-label">Warning</span>
+    <p><code>.gitignore</code> only stops <em>untracked</em> files from being added. If a file is already committed, adding it to <code>.gitignore</code> won't remove it from history — you need <code>git rm --cached &lt;file&gt;</code> first.</p>
+  </div>
+
+  <h2 id="undoing">Undoing changes</h2>
+  <p>Git gives you several ways to undo, depending on how far the change has gone:</p>
+  <table>
+    <thead><tr><th>Situation</th><th>Command</th></tr></thead>
+    <tbody>
+      <tr><td>Discard unstaged edits to a file</td><td><code>git restore &lt;file&gt;</code></td></tr>
+      <tr><td>Unstage a file (keep the edits)</td><td><code>git restore --staged &lt;file&gt;</code></td></tr>
+      <tr><td>Edit the message of your <em>last</em> commit (not yet pushed)</td><td><code>git commit --amend</code></td></tr>
+      <tr><td>Undo a commit but keep the changes as edits</td><td><code>git reset --soft HEAD~1</code></td></tr>
+      <tr><td>Undo a commit and discard the changes entirely</td><td><code>git reset --hard HEAD~1</code></td></tr>
+      <tr><td>Undo a commit that's already been pushed/shared</td><td><code>git revert &lt;commit&gt;</code></td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn">
+    <span class="callout-label">Warning</span>
+    <p><code>git reset --hard</code> permanently discards uncommitted work with no undo. Prefer <code>git revert</code> for anything already pushed — it adds a new commit that cancels out the old one instead of rewriting history.</p>
+  </div>
+
+  <h2 id="remotes">Working with remotes</h2>
+  <p>A "remote" is a copy of the repository hosted elsewhere — usually on GitHub.</p>
+  <pre><code># See what remotes are configured
+git remote -v
+
+# Connect a local repo to a GitHub repo you created
+git remote add origin https://github.com/you/repo.git
+
+# Send your commits to GitHub
+git push origin main
+
+# Pull down commits others have pushed
+git pull origin main</code></pre>
+  <p><code>git pull</code> is really <code>git fetch</code> (download new history) followed by <code>git merge</code> (combine it with yours) — see <a href="branching-merging.html">Branching &amp; Merging</a> for what happens when that merge isn't automatic.</p>
+
+  <div class="page-nav">
+    <span></span>
+    <a href="branching-merging.html">Next: Branching &amp; Merging →</a>
+  </div>
+</main>
+
+<footer>
+  GitHub Support &middot; a guide maintained for course office hours &middot; <a href="https://github.com/ganowacek/github-support">source on GitHub</a>
+</footer>
+</body>
+</html>
